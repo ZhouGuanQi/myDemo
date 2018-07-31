@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="dahuiji.css" />
+</head>
+<body>
+	<div id="body_main" class="main">
+			<ul id="options" class="options">
+				<li level="100">傻傻赛啦</li>
+				<li level="200">比较困难</li>
+				<li level="300">非常困难</li>
+				<li level="400">超级困难</li>
+			</ul>
+	</div>
+</body>	
+</html>	
+<script src="js/engine.js"></script>
+<script src="js/myPlane.js"></script>
+<script src="js/bullet.js"></script>
+<script src="js/enime.js"></script>
+<script src="../../tool.js"></script>
+<script type="text/javascript">
+	/**
+	 * 引擎（游戏入口）（引擎类）
+	 * 
+	 * 		属性：
+	 * 			options
+	 * 			body_main
+	 * 		功能：
+	 * 			点击选项	
+	 * 			欢迎小飞机动画
+	 * 			背景动画
+	 * 		
+	 * 
+	 * 战斗机
+	 * 	    属性 飞机元素（div）
+	 * 	    功能 
+	 * 		创建飞机，飞机移动，
+	 * 
+	 * 子弹
+	 * 		属性 子弹元素(div)
+	 * 		功能  创建子弹，子弹移动，碰撞
+	 * 
+	 * 敌机
+	 * 		属性 敌机元素本身
+	 * 		功能 创建敌机，敌机移动，碰撞
+	 * 
+	 */
+	
+	/*
+	 *  引擎（游戏入口）（引擎类）
+	 * 
+	 * 		属性：
+	 * 			options
+	 * 			body_main
+	 * 		功能：
+	 * 			点击选项	
+	 * 			欢迎小飞机动画
+	 * 			背景动画
+	 */
+	window.onload = function(){
+		new GameEngine();
+	}
+	
+
+	
+	
+
+	
+	
+	
+	
+	
+	
+	/*
+	 * 角色：
+	 * 		引擎（入口）gameEngine
+	 * 			属性：body_main
+	 * 			属性：options
+	 * 			功能：点击隐藏界面,背景移动，飞机动画，战斗机出现
+	 * 
+	 * 		战斗机 MyPlane
+	 * 			属性：飞机元素
+	 * 			功能：创建 移动，开火
+	 * 		敌机	Enemy
+	 * 			属性：敌机元素
+	 * 			功能：创建 移动 碰撞 爆炸
+	 * 		子弹	Bullet
+	 * 			属性：子弹元素
+	 * 			功能：创建 移动 碰撞 爆炸
+	 * 
+	 * 
+	 */
+	/*window.onload = function(){
+		new GameEngine();
+	}
+	
+	function GameEngine(){
+		this.body_main = $("body_main");
+		this.options = $("options");
+		this.enemies = new Set();
+		this.level = 0;
+		//初始化引擎功能
+		this.innit();
+	}
+	GameEngine.prototype.innit = function(){
+		
+		this.options.addEventListener("click",function(e){
+			var e = e || event;
+			var target = e.target || e.srcElement;
+			if(target.nodeName.toLowerCase() == "li"){
+				this.level = target.getAttribute("level");
+				this.options.remove();
+				
+				this.loading();//加载引擎动画
+			}
+		}.bind(this));
+	}
+	//引擎动画载入
+	GameEngine.prototype.loading = function(){
+		//添加logo
+		this.logo = document.createElement("div");
+		this.logo.className = "logo";
+		this.body_main.appendChild(this.logo);
+		
+		//loding动画飞机，
+		this.loadingPlan = document.createElement("div");
+		this.loadingPlan.className = "loading";
+		this.body_main.appendChild(this.loadingPlan);
+		var i = 1;
+		var loadingTimer = setInterval(function(){
+			i++;
+			this.loadingPlan.style.backgroundImage = "url(images/loading"+i+".png)";
+			if(i==3){
+				i = 0;
+			}
+		}.bind(this),500);
+		//背景移动，
+		var bgSpeedY = 0;
+		setInterval(function(){
+			this.body_main.style.backgroundPositionY = (bgSpeedY+=4) + "px";
+		},30);
+		//战斗机出现
+		//3秒后logo和loding动画飞机消失，战斗机上场
+		setTimeout(function(){
+			this.logo.remove();
+			this.loadingPlan.remove();
+			clearInterval(loadingTimer);
+			//游戏开始
+			this.gameStart();
+			
+		}.bind(this),3000);
+	}
+	GameEngine.prototype.gameStart = function(){
+		//引出战斗机
+		//alert("杀杀杀！！！");
+		new MyPlane(this);
+		//敌机来袭
+		setInterval(function(){
+			if(Math.random() > 0.2){
+				this.enemies.add(new Enemy(this,"small"));
+			}
+		}.bind(this),1000)
+		
+		setInterval(function(){
+			if(Math.random() > 0.4){
+				this.enemies.add(new Enemy(this,"middle"));
+			}
+			
+		}.bind(this),2000);
+		
+		setInterval(function(){
+			if(Math.random() > 0.7){
+				this.enemies.add(new Enemy(this,"large"));
+			}
+		}.bind(this),4000)
+	}*/
+	/* 
+	 * 战斗机 MyPlane
+	 * 		属性：飞机元素
+	 * 		功能：创建 移动，开火
+	 * 1.飞机创建
+	 * 2.鼠标控制移动
+	 * 3.键盘控制移动
+	 * 4.
+	 */
+	/*function MyPlane(obj){
+		//GameEngine.call(this);
+		this.engineBody = obj.body_main;
+		this.gameLevel = obj.level;
+		this.enemies = obj.enemies;
+		//初始化战斗机功能
+		this.innit();
+		
+	}
+	MyPlane.prototype.innit = function(){
+		//创建战斗机
+		this.createPlane();
+		//战斗机移动；
+		this.addListener();
+		//发射子弹；
+		//new Bullet(this);
+		setInterval(function(){
+			new Bullet(this);
+		}.bind(this),this.gameLevel);
+		
+	}
+	//创建战斗机
+	MyPlane.prototype.createPlane = function(){
+		this.plane = document.createElement("div");
+		this.plane.className = "my-warplain";
+		this.engineBody.appendChild(this.plane);
+		this.plane.style.bottom = 0;
+		this.plane.style.left = (this.engineBody.offsetWidth-this.plane.offsetWidth)/2 + "px";
+	}
+	//监听鼠标控制战斗机移动
+	MyPlane.prototype.addListener = function(){
+		this.engineBody.addEventListener("mousemove",function(e){
+			var e = e || event;
+			var x = e.pageX - this.plane.offsetWidth/2 - this.engineBody.offsetLeft;
+			//var y = e.pageX - this.plane.offsetWidth/2 - this.engineBody.offsetLeft;
+			x = x < 0 ? 0 : (x > this.engineBody.offsetWidth - this.plane.offsetWidth ? this.engineBody.offsetWidth - this.plane.offsetWidth : x)
+			this.plane.style.left = x + "px";
+		}.bind(this));
+	}
+	
+	//创建子弹
+	function Bullet(obj){
+		//GameEngine.call(this);
+		this.engineBody = obj.engineBody;
+		this.plane = obj.plane;
+		this.enemies = obj.enemies;
+		//初始化战斗机功能
+		this.innit();
+		
+	}
+	Bullet.prototype.innit = function(){
+		//alert("杀杀杀！！！");
+		//创建子弹
+		this.creatBullet();
+		//子弹发射
+		this.fire();
+	}
+	//创建子弹
+	Bullet.prototype.creatBullet = function(){
+		this.bullet = document.createElement("div");
+		this.bullet.className = "bullet";
+		this.engineBody.appendChild(this.bullet);
+		this.bullet.style.left = this.plane.offsetLeft + this.plane.offsetWidth/2 - this.bullet.offsetWidth/2 + "px";
+		this.bullet.style.top =  this.plane.offsetTop - this.bullet.offsetHeight + "px";
+	}
+	//子弹发射功能
+	Bullet.prototype.fire = function(){
+		this.fireSpeed = 0;
+		this.fireTimer = setInterval(function(){
+			this.fireSpeed--;
+			this.bullet.style.top = this.bullet.offsetTop + this.fireSpeed + "px";*/
+			/*
+			 * 在子弹发射的过程中，以一个子弹为基准，遍历所有敌机，如果子弹
+			 * 和某个敌机有碰撞，子弹销毁，敌机受伤
+			 * 		如何找到所有敌机？？
+			 * 		找到所有的敌机的方法：
+			 * 			1，在引擎中定义一个enemies属性，值是一个集合 
+			 * 			2，在创建敌机时，将所有敌机存入enemies集合中
+			 * 		找到所有敌机后，遍历所有敌机
+			 * 			判断子弹元素和敌机元素是否有碰撞，如果有碰撞，子弹销毁，敌机受伤
+			 * 
+			 * 
+			 */
+			//console.log(this.enemies);
+			/*for(var ele of this.enemies){//遍历所有敌机
+				//console.log(ele);
+				if(pz(this.bullet,ele.enemy)){//判断子弹元素和敌机元素是否有碰撞
+					//console.log(1);
+					//有碰撞
+					//子弹爆炸销毁
+					this.fireBomb();
+					//停止当前子弹定时器
+					clearInterval(this.fireTimer);
+					//敌机受伤
+					ele.hurt();
+				}
+			}
+			if(this.bullet.offsetTop < 0){
+				this.bullet.remove();
+				clearInterval(this.fireTimer);
+			}
+		}.bind(this),40)
+	}
+	//子弹爆炸销毁
+	Bullet.prototype.fireBomb = function(){
+		this.bullet.className = "bullet_die";
+		setTimeout(function(){
+			this.bullet.remove();
+		}.bind(this),200);
+	}
+	//	Enemy 敌机来袭
+	
+	function Enemy(obj,type){
+		
+		this.engineBody = obj.body_main;
+		this.type = type;
+		this.enemies = obj.enemies
+		//
+		this.innit();
+		
+	}
+	Enemy.prototype.innit = function(){
+		
+		//创建敌机
+		this.createEnemy();
+		//敌机袭击
+		this.enemyMove();
+	}
+	Enemy.prototype.createEnemy = function(){
+		this.enemy = document.createElement("div");
+		this.speed = 0;
+		switch(this.type){
+			case "small" : {
+				this.speed = 80;
+				this.bloodVolume = 1;
+				this.enemy.className = "enemy-small";
+				this.imgs = ["plain1_die1","plain1_die2","plain1_die3"];
+				this.engineBody.appendChild(this.enemy);
+				this.enemy.style.left = getRand(0,this.engineBody.offsetWidth-this.enemy.offsetWidth) + "px";
+				this.enemy.style.top = -this.enemy.offsetHeight + "px";
+				break;
+			}
+			case "middle" : {
+				this.speed = 120;
+				this.bloodVolume = 3;
+				this.enemy.className = "enemy-middle";
+				this.imgs = ["plain2_die1","plain2_die2","plain2_die3","plain2_die4"];
+				this.engineBody.appendChild(this.enemy);
+				this.enemy.style.left = getRand(0,this.engineBody.offsetWidth-this.enemy.offsetWidth) + "px";
+				this.enemy.style.top = -this.enemy.offsetHeight + "px"; 
+				break;
+			}
+			case "large" : {
+				this.speed = 180;
+				this.bloodVolume = 6;
+				this.enemy.className = "enemy-large";
+				this.imgs = ["plain3_die1","plain3_die2","plain3_die3","plain3_die4","plain3_die5","plain3_die6"];
+				this.engineBody.appendChild(this.enemy);
+				this.enemy.style.left = getRand(0,this.engineBody.offsetWidth-this.enemy.offsetWidth) + "px";
+				this.enemy.style.top = -this.enemy.offsetHeight + "px";
+				break;
+			}
+		}
+	}
+	Enemy.prototype.enemyMove = function(){
+		this.enemySpeed = 0;
+		this.enemyTimer = setInterval(function(){
+			this.enemy.style.top = this.enemy.offsetTop + this.enemySpeed + "px";
+			this.enemySpeed++;
+			if(this.enemy.offsetTop > this.engineBody.offsetHeight){
+				this.enemy.remove();
+				clearInterval(this.enemyTimer);
+			}
+		}.bind(this),this.speed);
+	}
+	//敌机受伤了
+	Enemy.prototype.hurt = function(){
+		--this.bloodVolume
+		if(this.bloodVolume == 0){
+			this.enemyBomb();
+		}
+	}
+	//敌机爆炸了
+	Enemy.prototype.enemyBomb = function(){
+		//this.enemy.remove();
+		//爆炸敌机停止运动
+		clearInterval(this.enemyTimer);
+		//如果飞机中弹后爆炸，后面的子弹再次和该飞机碰撞后，
+		//子弹可以继续前进，不需要再和的敌机进行碰撞检测了
+		//因此将集合中爆炸的敌机删除。
+		this.enemies.delete(this);
+		var timer = setInterval(function(){
+			if(this.imgs.length == 0){
+				this.enemy.remove();
+				return;
+			}
+			this.enemy.style.background = "url(images/"+this.imgs.shift()+".png) no-repeat";
+			//console.log(this.enemy.style.background);
+		}.bind(this),200);
+	}*/
+</script>
